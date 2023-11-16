@@ -25,7 +25,7 @@ struct SegmentTree {
 
     // tl tr to keep track of tree vertices
     // l r to keep track of query
-    int getAns(int v, int tl, int tr, int l, int r) {
+    int point_query(int v, int tl, int tr, int l, int r) {
         if (l > r) {
             return 0;
         }
@@ -33,8 +33,22 @@ struct SegmentTree {
             return t[v];
         }
         int tm = (tl + tr) / 2;
-        return getAns(v*2, tl, tm, l, min(r, tm))
-           + getAns(v*2+1, tm+1, tr, max(l, tm+1), r);
+        return point_query(v*2, tl, tm, l, min(r, tm))
+           + point_query(v*2+1, tm+1, tr, max(l, tm+1), r);
+    }
+
+    void point_update(int v, int tl, int tr, int pos, int new_val) {
+        if (tl == tr) {
+            t[v] = new_val;
+        } else {
+            int tm = (tl + tr) / 2;
+            if (pos <= tm) {
+                point_update(v*2, tl, tm, pos, new_val);
+            } else {
+                point_update(v*2+1, tm+1, tr, pos, new_val);
+            }
+            t[v] = t[v*2] + t[v*2+1];
+        }
     }
 };
 
