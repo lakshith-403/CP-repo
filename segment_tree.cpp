@@ -12,7 +12,7 @@ struct SegmentTree {
     }
 
     // call with build(a, 1, 0, n-1)
-    void build(vector<int>& a, int v, int tr, int tl) {
+    void build(vector<int>& a, int v, int tl, int tr) {
         if (tl == tr) {
             t[v] = a[tl];
         } else {
